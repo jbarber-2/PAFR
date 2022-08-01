@@ -18,15 +18,10 @@ print(y.shape)
 X_train_full, X_test, y_train_full, y_test = train_test_split(X, y, test_size=0.9, random_state=42)
 X_train, X_valid, y_train, y_valid = train_test_split(X_train_full, y_train_full)
 
-def build_model(n_hidden=1, n_neurons=1000):
-    model = keras.models.Sequential()
-    for layer in range(n_hidden): # add in mulitple similar hidden layers with same activation function and parameters
-        model.add(keras.layers.Dense(n_neurons, activation="relu"))
-    model.add(keras.layers.Dense(1)) # adds a dense layer at the end
-    model.compile(loss="mean_squared_error", optimizer="Nadam") # defines loss and optimizer
-    return model
-
-model = build_model()
+model = keras.models.Sequential()
+model.add(keras.layers.Dense(1000, activation="relu"))
+model.add(keras.layers.Dense(1))
+model.compile(loss="mean_squared_error", optimizer="Nadam")
 
 model.fit(X_train, y_train, epochs = 200, validation_data = (X_valid, y_valid), batch_size = 10, callbacks=[keras.callbacks.EarlyStopping(patience=10)])
 
